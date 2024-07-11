@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
-contract Presell {
+contract Presale {
     // Token details
     ERC20 public token;
 
@@ -17,7 +17,7 @@ contract Presell {
     // USDT token details
     IERC20 public usdtToken;
 
-    // Presell parameters
+    // Presale parameters
 
     uint256 public tokenPrice; // *1e-3
     uint256 public tokensForSale;
@@ -33,7 +33,7 @@ contract Presell {
 
     // Events
     event TokensPurchased(address indexed purchaser, uint256 amount);
-    event ICOEnded(uint256 tokensSold);
+    event PresaleEnded(uint256 tokensSold);
     event Withdrawal(address indexed owner, uint256 amount);
 
     constructor(
@@ -59,13 +59,13 @@ contract Presell {
     modifier onlyWhileOpen() {
         require(
             block.timestamp >= openingTime && block.timestamp <= closingTime,
-            "Presell: not open"
+            "Presale: not open"
         );
         _;
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Presell: caller is not the token owner");
+        require(msg.sender == owner, "Presale: caller is not the token owner");
         _;
     }
 
@@ -86,13 +86,13 @@ contract Presell {
     // Function to buy tokens using Ether
     function buyTokensWithEther(uint256 giftCode) external payable onlyWhileOpen {
         uint256 weiAmount = msg.value;
-        require(weiAmount > 0, "Presell: amount must be greater than zero");
+        require(weiAmount > 0, "Presale: amount must be greater than zero");
 
         uint256 tokensToBuy = getTokensToBuy(weiAmount);
 
         require(
             tokensToBuy <= tokensForSale - tokensSold,
-            "Presell: not enough tokens left for sale"
+            "Presale: not enough tokens left for sale"
         );
 
         tokensSold = tokensSold + tokensToBuy;
@@ -109,10 +109,10 @@ contract Presell {
 
     // Function to buy tokens using USDT
     function buyTokensWithUSDT(uint256 _amount, uint256 giftCode) external onlyWhileOpen {
-        require(_amount > 0, "Presell: amount must be greater than zero");
+        require(_amount > 0, "Presale: amount must be greater than zero");
         require(
             _amount <= (tokensForSale - tokensSold),
-            "Presell: not enough tokens left for sale"
+            "Presale: not enough tokens left for sale"
         );
 
         uint256 usdtAmount = _amount * tokenPrice * 1e15;
@@ -141,7 +141,7 @@ contract Presell {
     // Function to withdraw accumulated Ether
     function withdrawEther() external onlyOwner {
         uint256 balance = address(this).balance;
-        require(balance > 0, "Presell: no Ether to withdraw");
+        require(balance > 0, "Presale: no Ether to withdraw");
 
         owner.transfer(balance);
         emit Withdrawal(owner, balance);
@@ -149,21 +149,21 @@ contract Presell {
 
     function withdrawToken(uint256 amount) external onlyOwner {
         uint256 balance = amount * 1e18;
-        require(balance > 0, "Presell: no Token to withdraw");
+        require(balance > 0, "Presale: no Token to withdraw");
 
         bool transferSuccess = token.transfer(msg.sender, balance);
         require(transferSuccess, "Token transfer failed");
     }
 
-    function endICO() external onlyOwner {
-        require(block.timestamp > closingTime, "Presell: Presell is still ongoing");
+    function endPresale() external onlyOwner {
+        require(block.timestamp > closingTime, "Presale: Presale is still ongoing");
 
         uint256 remainingTokens = token.balanceOf(address(this));
         if (remainingTokens > 0) {
             token.transfer(owner, remainingTokens);
         }
 
-        emit ICOEnded(tokensSold);
+        emit PresaleEnded(tokensSold);
     }
 
     function getRemainingTokens() public view returns (uint256) {
