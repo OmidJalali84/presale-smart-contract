@@ -28,3 +28,13 @@ yarn hardhat deploy
 ```
 yarn hardhat test
 ```
+
+# Learn more
+
+To make a advanced site for your Presale project, follow me on this repo: [presale-site](https://github.com/OmidJalali84/presell-site.git)
+
+
+
+# Thank You
+
+Thank you 
