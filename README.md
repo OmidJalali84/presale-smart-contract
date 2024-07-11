@@ -1,13 +1,7 @@
-# Sample Hardhat Project
+# Presale Smart Contract
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
 
-Try running some of the following tasks:
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
-```
+You may have heard before about Presale or ICO or IEO and similar projects. But in this repo, we will go throw a new
+way to create a Presale. This project is completely *decentralized* and will give users 100% peace of mind, making your project completely trustworthy.
+
