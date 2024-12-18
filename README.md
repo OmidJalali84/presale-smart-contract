@@ -1,47 +1,44 @@
-# Presale Smart Contract
+# Presale Contract
 
+This repository contains the implementation of a **Presale Contract** developed using Hardhat and Solidity. The contract facilitates the sale of ERC20 tokens during a specified presale period, supporting payments in Ether (ETH) and USDT.
 
+## Features
 
-You may have heard before about Presale or ICO or IEO and similar projects. But what if i say it is *decentralized!* in this repo, we will go throw a new
-way to create a Presale. This project is completely *decentralized*. It means, all the process is on-chain using smart contract and will give users 100% peace of mind, making your project completely trustworthy.
+- **Token Sales:** Users can purchase tokens with Ether or USDT.
+- **Price Feeds:** Utilizes Chainlink for real-time ETH/USD price conversion.
+- **Gift Codes:** Tracks purchases associated with unique gift codes.
+- **Owner Management:** Allows the owner to update prices, withdraw funds, and manage presale tokens.
+- **Presale Period:** Ensures token sales occur only during the defined period.
+- **Secure Transactions:** Implements reentrancy protection for safe token transfers.
 
+## Prerequisites
 
-# Quick Start
+Ensure you have the following tools installed before deploying and interacting with the contract:
 
-For getting started, clone the project and cd into folder:
+- **Node.js** and **npm**
+- **Hardhat**
+- A wallet (e.g., MetaMask) with test ETH and USDT for testing on a testnet (e.g., Goerli, Sepolia).
+- Chainlink ETH/USD price feed address for the deployed network.
 
-```
-git clone https://github.com/OmidJalali84/Presale-smart-contract.git
-cd presale-smart-contract
-```
+## Contract Details
 
-# Usage
+### Constructor Parameters
 
-Deploy:
+The contract requires the following parameters during deployment:
 
-```
-yarn hardhat deploy
-```
+1. **`_tokenPrice`** - Price of 1 token in USD (multiplied by `1e-3`).
+2. **`_tokensForSale`** - Total number of tokens available for sale.
+3. **`_openingTime`** - Presale opening timestamp.
+4. **`_closingTime`** - Presale closing timestamp.
+5. **`_priceFeedAddress`** - Address of the Chainlink price feed.
+6. **`_token`** - Address of the ERC20 token to be sold.
+7. **`_usdtToken`** - Address of the USDT token contract.
+8. **`_owner`** - Address of the contract owner.
 
-## Testing
+## Deployment Steps
 
-```
-yarn hardhat test
-```
-
-# Learn more
-
-To make a advanced site for your Presale project, follow me on this repo: [presale-site](https://github.com/OmidJalali84/presell-site.git)
-
-
-
-# Thank You
-
-If you appreciated this, feel free to follow me
-
-[![Patrick Collins Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/PatrickAlphaC)
-[![Patrick Collins YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/channel/UCn-3f8tw_E1jZvhuHatROwA)
-[![Patrick Collins Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/patrickalphac/)
-[![Patrick Collins Medium](https://img.shields.io/badge/Medium-000000?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@patrick.collins_58673/)
-
-With respect to my great teacher, [patrick collins](https://github.com/PatrickAlphaC).
+1. Clone the repository and install dependencies:
+   ```bash
+   git clone <repository_url>
+   cd <repository_folder>
+   npm install
