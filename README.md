@@ -34,11 +34,3 @@ The contract requires the following parameters during deployment:
 6. **`_token`** - Address of the ERC20 token to be sold.
 7. **`_usdtToken`** - Address of the USDT token contract.
 8. **`_owner`** - Address of the contract owner.
-
-## Deployment Steps
-
-1. Clone the repository and install dependencies:
-   ```bash
-   git clone <repository_url>
-   cd <repository_folder>
-   npm install
