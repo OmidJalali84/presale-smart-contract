@@ -11,14 +11,7 @@ This repository contains the implementation of a **Presale Contract** developed 
 - **Presale Period:** Ensures token sales occur only during the defined period.
 - **Secure Transactions:** Implements reentrancy protection for safe token transfers.
 
-## Prerequisites
-
-Ensure you have the following tools installed before deploying and interacting with the contract:
-
-- **Node.js** and **npm**
-- **Hardhat**
-- A wallet (e.g., MetaMask) with test ETH and USDT for testing on a testnet (e.g., Goerli, Sepolia).
-- Chainlink ETH/USD price feed address for the deployed network.
+---
 
 ## Contract Details
 
@@ -34,3 +27,66 @@ The contract requires the following parameters during deployment:
 6. **`_token`** - Address of the ERC20 token to be sold.
 7. **`_usdtToken`** - Address of the USDT token contract.
 8. **`_owner`** - Address of the contract owner.
+
+---
+
+## Functions Overview
+
+### Public Functions
+
+- **`buyTokensWithEther(uint256 giftCode)`**  
+  Purchases tokens using Ether. Accepts a `giftCode` to track associated purchases.
+
+- **`buyTokensWithUSDT(uint256 amount, uint256 giftCode)`**  
+  Purchases tokens using USDT. Accepts an `amount` and a `giftCode`.
+
+- **`getRemainingTokens()`**  
+  Returns the number of tokens still available for sale.
+
+### Owner Functions
+
+- **`changePrice(uint256 newPrice)`**  
+  Updates the token price.
+
+- **`changeOwner(address payable newOwner)`**  
+  Transfers ownership of the contract.
+
+- **`withdrawEther()`**  
+  Withdraws all accumulated Ether to the owner's wallet.
+
+- **`withdrawToken(uint256 amount)`**  
+  Withdraws a specified amount of tokens to the owner.
+
+- **`endPresale()`**  
+  Ends the presale and transfers remaining tokens to the owner.
+
+---
+
+## Events
+
+- **`TokensPurchased(address indexed purchaser, uint256 amount)`**  
+  Emitted when tokens are purchased.
+
+- **`PresaleEnded(uint256 tokensSold)`**  
+  Emitted when the presale ends.
+
+- **`Withdrawal(address indexed owner, uint256 amount)`**  
+  Emitted when funds are withdrawn by the owner.
+
+---
+
+## Security Considerations
+
+- Implements reentrancy guard (`nonReentrant`) to prevent reentrancy attacks.
+- Ensures presale functions only operate during the specified presale period (`onlyWhileOpen`).
+- Transfers funds and tokens securely using OpenZeppelin libraries.
+
+---
+
+## License
+
+This project is licensed under the **MIT License**. See the LICENSE file for details.
+
+---
+
+Feel free to contribute or raise issues to improve this project! 🚀
