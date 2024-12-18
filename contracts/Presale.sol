@@ -5,6 +5,7 @@ pragma solidity ^0.8.19;
 // Import OpenZeppelin libraries for ERC20 token, math operations, and ERC20 interfaces
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract Presale {
@@ -84,7 +85,7 @@ contract Presale {
     }
 
     // Function to buy tokens using Ether
-    function buyTokensWithEther(uint256 giftCode) external payable onlyWhileOpen {
+    function buyTokensWithEther(uint256 giftCode) external payable onlyWhileOpen nonReentrant {
         uint256 weiAmount = msg.value;
         require(weiAmount > 0, "Presale: amount must be greater than zero");
 
@@ -108,7 +109,7 @@ contract Presale {
     }
 
     // Function to buy tokens using USDT
-    function buyTokensWithUSDT(uint256 _amount, uint256 giftCode) external onlyWhileOpen {
+    function buyTokensWithUSDT(uint256 _amount, uint256 giftCode) external onlyWhileOpen nonReentrant {
         require(_amount > 0, "Presale: amount must be greater than zero");
         require(
             _amount <= (tokensForSale - tokensSold),
